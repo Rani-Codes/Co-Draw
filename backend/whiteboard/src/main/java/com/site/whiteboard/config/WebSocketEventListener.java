@@ -9,8 +9,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import com.site.whiteboard.chat.ChatMessage;
-import com.site.whiteboard.chat.ChatMessage.MessageType;
+import com.site.whiteboard.whiteboard.DrawEvent;
+import com.site.whiteboard.whiteboard.DrawEvent.DrawEventType;
 
 @Component
 @RequiredArgsConstructor
@@ -26,11 +26,11 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
             log.info("User disconnected: {}", username);
-            var chatMessage = ChatMessage.builder()
-                .type(MessageType.LEAVE)
-                .sender(username)
+            var drawEvent = DrawEvent.builder()
+                .type(DrawEventType.END)
+                .username(username)
                 .build();
-            messageTemplate.convertAndSend("/topic/public", chatMessage);
+            messageTemplate.convertAndSend("/topic/whiteboard", drawEvent);
         }
     }
 }
