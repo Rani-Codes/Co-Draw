@@ -8,4 +8,16 @@ export default defineConfig({
     svelte(),
     tailwindcss(),
   ],
+  define: {
+    // Add polyfills for SockJS
+    global: 'window',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis',
+      },
+    },
+  },
 })
