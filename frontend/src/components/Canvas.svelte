@@ -3,11 +3,12 @@
     /* @tailwind:ignore */
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     import { sendDrawEvent, type DrawEvent } from '../services/websocket';
+    import { Pencil, Eraser, Trash } from 'lucide-svelte';
   
     export let username: string;
     export let receivedEvents: DrawEvent[] = [];
+
   
-    const dispatch = createEventDispatcher();
     
     let canvas: HTMLCanvasElement;
     let ctx: CanvasRenderingContext2D;
@@ -548,30 +549,17 @@
   <div class="flex flex-col w-full h-full bg-white rounded-lg overflow-hidden">
     <div class="flex items-center p-2 bg-gray-100 border-b border-gray-300">
       <div class="flex gap-1 mr-4">
-        <!-- svelte-ignore a11y_consider_explicit_label -->
-        <!-- Lets svelte not freak out about the title attribute -->
         <button 
           class={`flex items-center justify-center w-10 h-10 border-none rounded ${!isEraser ? 'bg-[#840404] text-white' : 'bg-white hover:bg-gray-200'}`}
           on:click={() => setTool('pen')}
           title="Pen">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-            <path d="M2 2l7.586 7.586"></path>
-            <circle cx="11" cy="11" r="2"></circle>
-          </svg>
+          <Pencil />
         </button>
-        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button 
           class={`flex items-center justify-center w-10 h-10 border-none rounded ${isEraser ? 'bg-[#840404] text-white' : 'bg-white hover:bg-gray-200'}`}
           on:click={() => setTool('eraser')}
           title="Eraser">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <path d="M15.5 2H18a2 2 0 0 1 2 2v2.5"></path>
-            <path d="M22 14L13 5"></path>
-            <path d="M22 20L13 11"></path>
-          </svg>
+          <Eraser />
         </button>
       </div>
       
@@ -589,16 +577,11 @@
           title="Line Width">
       </div>
       
-      <!-- svelte-ignore a11y_consider_explicit_label -->
-      <!-- Lets svelte not freak out about the title attribute -->
       <button 
         class="flex items-center justify-center w-10 h-10 border-none bg-white rounded hover:bg-red-100"
         on:click={handleClearCanvas}
         title="Clear Canvas">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 6h18"></path>
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-        </svg>
+        <Trash />
       </button>
     </div>
     
